@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f39ef88-cd8f-4fb4-bc46-1c4252f29c36" name="Changes" comment="game over screen" />
+    <list default="true" id="8f39ef88-cd8f-4fb4-bc46-1c4252f29c36" name="Changes" comment="Chests &amp; other qol">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Chest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/StairUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tonic/util/MapUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tonic/util/XpLevelUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/LootDrop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/LootDrop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/systems/CombatSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/systems/CombatSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/systems/DungeonMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/systems/DungeonMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/systems/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/systems/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/LootUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/LootUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,13 +124,22 @@
       <option name="project" value="LOCAL" />
       <updated>1739784209211</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="game over screen">
+      <option name="closed" value="true" />
+      <created>1739784624289</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739784624289</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="tweak ui and npc movement" />
     <MESSAGE value="game over screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="game over screen" />
+    <MESSAGE value="Chests &amp; other qol" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chests &amp; other qol" />
   </component>
 </project>

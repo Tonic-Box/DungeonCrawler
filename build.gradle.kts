@@ -26,6 +26,10 @@ dependencies {
 
     // Platform-specific natives for desktop
     implementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+
+    // Lombok
+    implementation("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 
 tasks.test {

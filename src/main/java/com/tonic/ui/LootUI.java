@@ -4,12 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.tonic.DungeonCrawlerGame;
 import com.tonic.entities.LootDrop;
 import com.tonic.entities.Player;
+import lombok.Getter;
 
 public class LootUI {
     private boolean active = false;
+    @Getter
     private boolean pickupConfirmed = false;
+    @Getter
     private boolean pickupDeclined = false;
     private LootDrop currentLoot = null;
     private BitmapFont font;
@@ -33,14 +37,6 @@ public class LootUI {
         }
     }
 
-    public boolean isPickupConfirmed() {
-        return pickupConfirmed;
-    }
-
-    public boolean isPickupDeclined() {
-        return pickupDeclined;
-    }
-
     /**
      * Resets the loot UI state.
      */
@@ -62,16 +58,21 @@ public class LootUI {
         {
             if(player.getOverheadText().startsWith("Pick up "))
             {
-                player.setOverheadText("");
+                player.setOverheadText("", -1);
             }
             return;
         }
-        player.setOverheadText("Pick up " + currentLoot.item.name + "? (Y/N)");
+        player.setOverheadText("Pick up " + currentLoot.item.name + "? (Y/N)", -1);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Y)) {
             pickupConfirmed = true;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             pickupDeclined = true;
         }
+    }
+
+    public static LootUI getInstance()
+    {
+        return DungeonCrawlerGame.instance.engine.simpleLootUI;
     }
 }

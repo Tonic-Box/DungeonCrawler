@@ -28,7 +28,6 @@ public class GameScreen implements Screen {
 
         font = new BitmapFont();
         shapeRenderer = new ShapeRenderer();
-        game.engine.init();
     }
 
     @Override
@@ -63,6 +62,7 @@ public class GameScreen implements Screen {
         // Draw player info in top-right:
         String playerInfo = "Player: " + game.engine.player.name +
                 "\nHP: " + game.engine.player.health +
+                "\nLevel: " + game.engine.player.getLevel() + " (Xp Til Lvl: " + game.engine.player.remainingXp() + ")" +
                 " \nFloor: " + game.engine.currentFloor;
         // Adjust X offset so that the text is near the top-right.
         font.draw(game.batch, playerInfo, 20, hudCamera.viewportHeight - 20);

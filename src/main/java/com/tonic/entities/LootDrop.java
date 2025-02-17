@@ -8,7 +8,7 @@ public class LootDrop extends Entity {
     public Item item;
 
     public LootDrop(Item item, float x, float y) {
-        super(item.name, 0, 0, 0, Color.CYAN);
+        super(item.name, 0, Color.CYAN, Color.LIME);
         this.item = item;
         this.x = x;
         this.y = y;

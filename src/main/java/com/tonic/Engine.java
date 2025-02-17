@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.tonic.entities.Chest;
 import com.tonic.entities.LootDrop;
 import com.tonic.entities.Monster;
 import com.tonic.entities.Player;
@@ -34,6 +35,7 @@ public class Engine {
     public LootUI simpleLootUI;
     public Minimap minimap;
     public Map<String, StaircaseLink> staircaseLinks = new HashMap<>();
+    private StairUI stairUI;
     public boolean gameOver = false;
 
     private String getStairKey(int floor, int tileX, int tileY, String side) {
@@ -50,14 +52,15 @@ public class Engine {
 
     public void init() {
         currentFloor = 0;
+        stairUI = new StairUI();
         long seed = baseSeed + currentFloor;
         Floor floor0 = new Floor(currentFloor, 50, 40, seed, false);
         floors.put(currentFloor, floor0);
         currentFloorObj = floor0;
 
-        player = new Player("Hero", 100, 10, 2);
+        player = new Player("Hero", 2);
         int[] spawn = currentFloorObj.getRandomFloorTile();
-        player.setTile(spawn[0], spawn[1]);
+        player.setTile(spawn);
         Weapon sword = new Weapon("Sword", 5);
         player.inventory.addItem(sword);
 
@@ -172,12 +175,13 @@ public class Engine {
                                     System.out.println("Loot dropped: " + lootItem.name);
                                 }
                                 questManager.updateProgress(1);
+                                monster.giveXp(player);
                             }
                         } else {
                             combatSystem.fight(monster, player);
                         }
                         monster.playerTurn = !monster.playerTurn;
-                        monster.combatTimer = 0.6f;
+                        monster.combatTimer = 1f;
                     } else {
                         monster.combatTimer -= delta;
                     }
@@ -218,11 +222,27 @@ public class Engine {
     }
 
     public void renderVisual(ShapeRenderer shapeRenderer) {
+
+        // Render the dungeon map first.
         currentFloorObj.dungeonMap.render(shapeRenderer);
+
+        // Then render the stairs on top.
+        stairUI.render(shapeRenderer, currentFloorObj.dungeonMap);
+
+        for(Chest chest : currentFloorObj.chests)
+        {
+            chest.render(shapeRenderer);
+        }
+
+        // Render loot drops.
         for (LootDrop drop : lootDrops) {
             drop.render(shapeRenderer);
         }
+
+        // Render the player.
         player.render(shapeRenderer);
+
+        // Render monsters.
         for (Monster monster : floors.get(currentFloor).monsters) {
             if (monster.isAlive()) {
                 monster.render(shapeRenderer);
@@ -230,7 +250,10 @@ public class Engine {
         }
     }
 
+
+
     public void renderUI(SpriteBatch batch, ShapeRenderer shapeRenderer, OrthographicCamera hudCamera, OrthographicCamera worldCamera) {
+
         // Draw inventory/equipment panels using HUD camera.
         shapeRenderer.setProjectionMatrix(hudCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);

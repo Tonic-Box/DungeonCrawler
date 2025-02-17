@@ -1,9 +1,7 @@
 package com.tonic.systems;
 
-import com.badlogic.gdx.math.MathUtils;
+import com.tonic.entities.Chest;
 import com.tonic.entities.Monster;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,7 +18,8 @@ public class Floor {
     public int linkedFloor = -1;       // the other floor number
     public int linkedStairsX = -1;     // tile coordinate of the staircase on the linked floor
     public int linkedStairsY = -1;
-    public List<Monster> monsters = new ArrayList<>();
+    public final List<Monster> monsters;
+    public final List<Chest> chests;
 
     /**
      * Constructor for a floor that may have an up staircase.
@@ -49,24 +48,8 @@ public class Floor {
             stairsUpY = -1;
         }
 
-        genMonsters(level);
-    }
-
-    public void genMonsters(int level)
-    {
-        int number = MathUtils.random(10,25);
-        for(int i = 0; i < number; i++)
-        {
-            int[] tile = getRandomFloorTile();
-            Monster monster = new Monster(
-                    "Monster",
-                    level * 10 + MathUtils.random(5, 25),
-                    level + MathUtils.random(1,10),
-                    level + MathUtils.random(1,10)
-            );
-            monster.setTile(tile[0], tile[1]);
-            monsters.add(monster);
-        }
+        monsters = Monster.genList(dungeonMap, level);
+        chests = Chest.generateChest(dungeonMap, level + 1);
     }
 
     /**
@@ -98,7 +81,8 @@ public class Floor {
         stairsDownY = tile[1];
         dungeonMap.setStairsDown(stairsDownX, stairsDownY);
 
-        genMonsters(level);
+        monsters = Monster.genList(dungeonMap, level);
+        chests = Chest.generateChest(dungeonMap, level + 1);
     }
 
     /**

@@ -111,17 +111,6 @@ public class DungeonMap {
                     shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 1); // Wall.
                 }
                 shapeRenderer.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-
-                // Draw up staircase.
-                if (x == stairsUpX && y == stairsUpY) {
-                    shapeRenderer.setColor(0, 0, 1, 1); // Blue.
-                    shapeRenderer.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                }
-                // Draw down staircase.
-                if (x == stairsDownX && y == stairsDownY) {
-                    shapeRenderer.setColor(1, 0.5f, 0, 1); // Orange.
-                    shapeRenderer.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                }
             }
         }
     }

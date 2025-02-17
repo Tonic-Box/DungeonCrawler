@@ -4,11 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.tonic.DungeonCrawlerGame;
 import com.tonic.items.Armor;
 import com.tonic.items.Food;
 import com.tonic.items.Weapon;
 import com.tonic.systems.DungeonMap;
 import com.tonic.systems.Equipment;
+import com.tonic.util.XpLevelUtil;
+
+import java.util.logging.Level;
 
 /**
  * A player entity with equipment and overhead text.
@@ -16,15 +20,21 @@ import com.tonic.systems.Equipment;
 public class Player extends Entity {
     public Equipment equipment;
 
-    public Player(String name, int maxHealth, int attack, int defense) {
-        super(name, maxHealth, attack, defense, Color.GOLD);
+    public Player(String name, int level) {
+        super(name, XpLevelUtil.randomXpForLevel(level), Color.GOLD, Color.RED);
         this.x = 0;
         this.y = 0;
 
         equipment = new Equipment();
     }
 
+    public static Player getInstance() {
+        return DungeonCrawlerGame.instance.engine.player;
+    }
+
+    @Override
     public void update(float delta, DungeonMap dungeonMap) {
+        super.update(delta, dungeonMap);
         float speed = 200 * delta;
         float newX = x;
         float newY = y;
