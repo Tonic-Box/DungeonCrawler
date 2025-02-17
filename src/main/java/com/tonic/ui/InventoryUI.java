@@ -3,7 +3,6 @@ package com.tonic.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,7 +15,7 @@ import com.tonic.items.Food;
 import com.tonic.items.Item;
 import com.tonic.items.Weapon;
 
-public class SimpleInventoryUI {
+public class InventoryUI {
     private boolean visible = false;
     // Panel dimensions.
     private final float panelWidth;
@@ -28,7 +27,7 @@ public class SimpleInventoryUI {
     // We'll store a reference to a BitmapFont so we can draw text.
     private final BitmapFont font;
 
-    public SimpleInventoryUI(BitmapFont font) {
+    public InventoryUI(BitmapFont font) {
         this.font = font;
         panelWidth = 200;
         panelHeight = 200;

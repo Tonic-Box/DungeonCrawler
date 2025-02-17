@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.tonic.entities.LootDrop;
 import com.tonic.entities.Monster;
 import com.tonic.entities.Player;
@@ -13,9 +14,9 @@ import com.tonic.items.Item;
 import com.tonic.items.Weapon;
 import com.tonic.systems.*;
 import com.tonic.ui.Minimap;
-import com.tonic.ui.SimpleEquipmentUI;
-import com.tonic.ui.SimpleInventoryUI;
-import com.tonic.ui.SimpleLootUI;
+import com.tonic.ui.EquipmentUI;
+import com.tonic.ui.InventoryUI;
+import com.tonic.ui.LootUI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,22 +25,17 @@ import java.util.Map;
 
 public class Engine {
     public Player player;
-    public List<Monster> monsters;
     public CombatSystem combatSystem;
     public QuestManager questManager;
     public Map<Integer, Floor> floors;
     public int currentFloor;
     public Floor currentFloorObj;
     public List<LootDrop> lootDrops;
-    private long baseSeed = 12345;
-
-    // Simple UI panels (drawn manually)
-    public SimpleInventoryUI simpleInventoryUI;
-    public SimpleEquipmentUI simpleEquipmentUI;
-    public SimpleLootUI simpleLootUI; // Loot prompt UI
+    private long baseSeed = MathUtils.random(0, 1000000);
+    public InventoryUI inventoryUI;
+    public EquipmentUI equipmentUI;
+    public LootUI simpleLootUI;
     public Minimap minimap;
-
-    // Map for staircase links.
     public Map<String, StaircaseLink> staircaseLinks = new HashMap<>();
 
     private String getStairKey(int floor, int tileX, int tileY, String side) {
@@ -47,7 +43,6 @@ public class Engine {
     }
 
     public Engine() {
-        monsters = new ArrayList<>();
         combatSystem = new CombatSystem();
         questManager = new QuestManager();
         floors = new HashMap<>();
@@ -57,80 +52,42 @@ public class Engine {
     public void init() {
         currentFloor = 0;
         long seed = baseSeed + currentFloor;
-        Floor floor0 = new Floor(50, 40, seed, false);
+        Floor floor0 = new Floor(currentFloor, 100, 100, seed, false);
         floors.put(currentFloor, floor0);
         currentFloorObj = floor0;
 
         player = new Player("Hero", 100, 10, 2);
         int[] spawn = currentFloorObj.getRandomFloorTile();
-        player.x = spawn[0] * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
-        player.y = spawn[1] * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
+        player.setTile(spawn[0], spawn[1]);
         Weapon sword = new Weapon("Sword", 5);
         player.inventory.addItem(sword);
 
-        Monster goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        goblin = new Monster("Goblin", 30, 5, 1);
-        goblin.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(goblin);
-
-        Monster orc = new Monster("Orc", 50, 8, 3);
-        orc.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(orc);
-
-        orc = new Monster("Orc", 50, 8, 3);
-        orc.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(orc);
-
-        orc = new Monster("Orc", 50, 8, 3);
-        orc.placeRandomlyOn(currentFloorObj.dungeonMap);
-        monsters.add(orc);
-
-
-        Quest quest = new Quest("Defeat all monsters", "Eliminate all monsters in the dungeon",
-                Quest.QuestType.DEFEAT, monsters.size());
+        Quest quest = new Quest("Defeat monsters", "Eliminate 1000 monsters in the dungeon",
+                Quest.QuestType.DEFEAT, 1000);
         questManager.addQuest(quest);
 
         BitmapFont font = new BitmapFont();
-        simpleInventoryUI = new SimpleInventoryUI(font);
-        simpleEquipmentUI = new SimpleEquipmentUI(font);
-        simpleLootUI = new SimpleLootUI(font);
+        inventoryUI = new InventoryUI(font);
+        equipmentUI = new EquipmentUI(font);
+        simpleLootUI = new LootUI(font);
         minimap = new Minimap();
     }
 
     public void update(float delta, OrthographicCamera hudCamera) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
-            if (simpleEquipmentUI.isVisible()) simpleEquipmentUI.toggle();
-            simpleInventoryUI.toggle();
+            if (equipmentUI.isVisible()) equipmentUI.toggle();
+            inventoryUI.toggle();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            if (simpleInventoryUI.isVisible()) simpleInventoryUI.toggle();
-            simpleEquipmentUI.toggle();
+            if (inventoryUI.isVisible()) inventoryUI.toggle();
+            equipmentUI.toggle();
         }
 
         player.update(delta, currentFloorObj.dungeonMap);
+        for(Monster monster : floors.get(currentFloor).monsters)
+        {
+            monster.update(delta, currentFloorObj.dungeonMap);
+        }
 
         int playerTileX = (int)(player.x / DungeonMap.TILE_SIZE);
         int playerTileY = (int)(player.y / DungeonMap.TILE_SIZE);
@@ -161,7 +118,7 @@ public class Engine {
                     long seed = baseSeed + newFloorNum;
                     int forcedUpX = playerTileX;
                     int forcedUpY = playerTileY;
-                    Floor newFloor = new Floor(50, 40, seed, forcedUpX, forcedUpY);
+                    Floor newFloor = new Floor(newFloorNum, 50, 40, seed, forcedUpX, forcedUpY);
                     floors.put(newFloorNum, newFloor);
 
                     StaircaseLink linkDown = new StaircaseLink(
@@ -195,7 +152,7 @@ public class Engine {
         }
 
         // New alternating combat logic:
-        for (Monster monster : monsters) {
+        for (Monster monster : floors.get(currentFloor).monsters) {
             if (monster.isAlive()) {
                 if (player.collidesWith(monster)) {
                     if (monster.combatTimer <= 0) {
@@ -247,10 +204,10 @@ public class Engine {
         }
 
         // Update UI panels.
-        if (simpleInventoryUI.isVisible())
-            simpleInventoryUI.update(player.inventory, player);
-        if (simpleEquipmentUI.isVisible())
-            simpleEquipmentUI.update(player, hudCamera);
+        if (inventoryUI.isVisible())
+            inventoryUI.update(player.inventory, player);
+        if (equipmentUI.isVisible())
+            equipmentUI.update(player, hudCamera);
 
         questManager.update();
     }
@@ -261,7 +218,7 @@ public class Engine {
             drop.render(shapeRenderer);
         }
         player.render(shapeRenderer);
-        for (Monster monster : monsters) {
+        for (Monster monster : floors.get(currentFloor).monsters) {
             if (monster.isAlive()) {
                 monster.render(shapeRenderer);
             }
@@ -272,21 +229,21 @@ public class Engine {
         // Draw inventory/equipment panels using HUD camera.
         shapeRenderer.setProjectionMatrix(hudCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        simpleInventoryUI.drawPanelBackground(shapeRenderer);
-        simpleEquipmentUI.drawPanelBackground(shapeRenderer);
+        inventoryUI.drawPanelBackground(shapeRenderer);
+        equipmentUI.drawPanelBackground(shapeRenderer);
         shapeRenderer.end();
 
         batch.setProjectionMatrix(hudCamera.combined);
         batch.begin();
-        simpleInventoryUI.drawText(batch, player.inventory);
-        simpleEquipmentUI.drawText(batch, player);
+        inventoryUI.drawText(batch, player.inventory);
+        equipmentUI.drawText(batch, player);
         batch.end();
 
         // Draw loot prompt and overhead text using the world camera.
         batch.setProjectionMatrix(worldCamera.combined);
         batch.begin();
         simpleLootUI.render(player);
-        for(Monster monster : monsters)
+        for(Monster monster : floors.get(currentFloor).monsters)
         {
             monster.drawOverhead();
         }

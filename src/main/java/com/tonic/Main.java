@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         // Configure your application
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("Simple 3D Game");
+        config.setTitle("DungeonDots");
         config.setWindowedMode(800, 600);
 
         // Launch the LibGDX application

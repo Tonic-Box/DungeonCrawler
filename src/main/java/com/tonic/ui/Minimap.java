@@ -41,22 +41,17 @@ public class Minimap {
         shapeRenderer.setColor(Color.BLUE);
         shapeRenderer.rect(offsetX + dungeonMap.stairsUpX * cellWidth, offsetY + dungeonMap.stairsUpY * cellHeight, cellWidth, cellHeight);
         shapeRenderer.setColor(Color.ORANGE);
-        shapeRenderer.rect(offsetX + dungeonMap.stairsDownX * cellWidth, offsetY + dungeonMap.stairsDownY * cellHeight, cellWidth, cellHeight);
+        shapeRenderer.rect(offsetX + dungeonMap.stairsDownX * cellWidth - 1, offsetY + dungeonMap.stairsDownY * cellHeight - 1, cellWidth + 2, cellHeight + 2);
 
         // Draw player indicator.
         int playerTileX = (int)(player.x / DungeonMap.TILE_SIZE);
         int playerTileY = (int)(player.y / DungeonMap.TILE_SIZE);
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.setColor(Color.GREEN);
         float playerIndicatorX = offsetX + playerTileX * cellWidth + cellWidth / 2;
         float playerIndicatorY = offsetY + playerTileY * cellHeight + cellHeight / 2;
-        shapeRenderer.circle(playerIndicatorX, playerIndicatorY, Math.min(cellWidth, cellHeight) / 3);
+        shapeRenderer.circle(playerIndicatorX, playerIndicatorY, (Math.min(cellWidth, cellHeight) / 3) + 2);
 
         shapeRenderer.end();
         shapeRenderer.dispose();
-    }
-
-    // For backward compatibility, if needed.
-    public void render(DungeonMap dungeonMap, OrthographicCamera hudCamera) {
-        render(dungeonMap, hudCamera, new Player("dummy", 0, 0, 0));
     }
 }

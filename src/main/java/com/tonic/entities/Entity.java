@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.tonic.DungeonCrawlerGame;
+import com.tonic.systems.DungeonMap;
 import com.tonic.systems.Inventory;
 
 public abstract class Entity {
@@ -86,5 +87,10 @@ public abstract class Entity {
     public String getOverheadText()
     {
         return overheadText;
+    }
+
+    public void setTile(int x, int y) {
+        this.x = x * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE / 2;
+        this.y = y * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE / 2;
     }
 }

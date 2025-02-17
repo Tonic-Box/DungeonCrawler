@@ -11,7 +11,7 @@ public class DungeonMap {
     public int[][] tiles; // 0 = wall, 1 = floor.
     public List<Rectangle> rooms;
     public static final int TILE_SIZE = 32;
-    private Random random;
+    private final Random random;
     // New fields for staircases (tile coordinates)
     public int stairsUpX = -1, stairsUpY = -1;
     public int stairsDownX = -1, stairsDownY = -1;
@@ -34,7 +34,7 @@ public class DungeonMap {
             }
         }
         // Generate random rooms.
-        int roomCount = 15; // More rooms for a larger dungeon.
+        int roomCount = 15;
         for (int i = 0; i < roomCount; i++) {
             int roomWidth = random.nextInt(6) + 4; // 4 to 9 tiles wide.
             int roomHeight = random.nextInt(6) + 4;
@@ -52,7 +52,6 @@ public class DungeonMap {
             if (!overlaps) {
                 createRoom(roomX, roomY, roomWidth, roomHeight);
                 if (!rooms.isEmpty()) {
-                    // Connect this room to the previous room.
                     Rectangle prevRoom = rooms.get(rooms.size() - 1);
                     int prevCenterX = (int) (prevRoom.x + prevRoom.width / 2);
                     int prevCenterY = (int) (prevRoom.y + prevRoom.height / 2);

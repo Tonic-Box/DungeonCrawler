@@ -24,9 +24,6 @@ public class Player extends Entity {
         equipment = new Equipment();
     }
 
-    /**
-     * Move the player using arrow keys, if the new position is walkable.
-     */
     public void update(float delta, DungeonMap dungeonMap) {
         float speed = 200 * delta;
         float newX = x;

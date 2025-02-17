@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.tonic.entities.LootDrop;
 import com.tonic.entities.Player;
 
-public class SimpleLootUI {
+public class LootUI {
     private boolean active = false;
     private boolean pickupConfirmed = false;
     private boolean pickupDeclined = false;
@@ -15,7 +15,7 @@ public class SimpleLootUI {
     private BitmapFont font;
     private GlyphLayout layout;
 
-    public SimpleLootUI(BitmapFont font) {
+    public LootUI(BitmapFont font) {
         this.font = font;
         this.layout = new GlyphLayout();
     }

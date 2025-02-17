@@ -1,5 +1,10 @@
 package com.tonic.systems;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.tonic.entities.Monster;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Floor {
@@ -8,19 +13,20 @@ public class Floor {
     public int stairsDownX, stairsDownY;
     public int width, height;
     public long seed;
-    private Random random;
+    private final Random random;
 
     // Stair linking fields:
     public boolean staircaseLinked = false;
     public int linkedFloor = -1;       // the other floor number
     public int linkedStairsX = -1;     // tile coordinate of the staircase on the linked floor
     public int linkedStairsY = -1;
+    public List<Monster> monsters = new ArrayList<>();
 
     /**
      * Constructor for a floor that may have an up staircase.
      * (For floor 0, typically no up staircase.)
      */
-    public Floor(int width, int height, long seed, boolean hasUpStairs) {
+    public Floor(int level, int width, int height, long seed, boolean hasUpStairs) {
         this.width = width;
         this.height = height;
         this.seed = seed;
@@ -42,6 +48,25 @@ public class Floor {
             stairsUpX = -1;
             stairsUpY = -1;
         }
+
+        genMonsters(level);
+    }
+
+    public void genMonsters(int level)
+    {
+        int number = MathUtils.random(10,25);
+        for(int i = 0; i < number; i++)
+        {
+            int[] tile = getRandomFloorTile();
+            Monster monster = new Monster(
+                    "Monster",
+                    level * 10 + MathUtils.random(5, 25),
+                    level + MathUtils.random(1,10),
+                    level + MathUtils.random(1,10)
+            );
+            monster.setTile(tile[0], tile[1]);
+            monsters.add(monster);
+        }
     }
 
     /**
@@ -49,7 +74,7 @@ public class Floor {
      * forcedUpX/Y are tile coordinates from the previous floor.
      * If they aren’t walkable, the nearest walkable tile is used.
      */
-    public Floor(int width, int height, long seed, int forcedUpX, int forcedUpY) {
+    public Floor(int level, int width, int height, long seed, int forcedUpX, int forcedUpY) {
         this.width = width;
         this.height = height;
         this.seed = seed;
@@ -72,6 +97,8 @@ public class Floor {
         stairsDownX = tile[0];
         stairsDownY = tile[1];
         dungeonMap.setStairsDown(stairsDownX, stairsDownY);
+
+        genMonsters(level);
     }
 
     /**

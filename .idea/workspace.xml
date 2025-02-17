@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f39ef88-cd8f-4fb4-bc46-1c4252f29c36" name="Changes" comment="Init" />
+    <list default="true" id="8f39ef88-cd8f-4fb4-bc46-1c4252f29c36" name="Changes" comment="Init">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/systems/DungeonMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/systems/DungeonMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/systems/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/systems/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/Minimap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/Minimap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/SimpleEquipmentUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/EquipmentUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/SimpleInventoryUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/InventoryUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tonic/ui/SimpleLootUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tonic/ui/LootUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +49,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -75,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739781041138</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Init">
+      <option name="closed" value="true" />
+      <created>1739781165144</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739781165144</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

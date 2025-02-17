@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Monster extends Entity {
     private float moveTimer = 0;
-    private float moveInterval = 2.0f; // Moves every 2 seconds.
+    private float moveInterval;
     private float wanderDistance = 16; // Pixels per move.
     private Random random = new Random();
     private List<Item> lootTable = LootTable.generate();
@@ -23,6 +23,8 @@ public class Monster extends Entity {
 
     public Monster(String name, int maxHealth, int attack, int defense) {
         super(name, maxHealth, attack, defense, Color.ORANGE);
+        //random float between .5 and 2.5
+        moveInterval = MathUtils.random(.5f, 2.5f);
     }
 
     /**
@@ -32,6 +34,7 @@ public class Monster extends Entity {
         moveTimer += delta;
         if (moveTimer >= moveInterval) {
             moveTimer = 0;
+            moveInterval = MathUtils.random(.5f, 2.5f);
             float dx = 0, dy = 0;
             int dir = random.nextInt(4);
             if (dir == 0) dx = wanderDistance;

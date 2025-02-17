@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.tonic.entities.Player;
 
-public class SimpleEquipmentUI {
+public class EquipmentUI {
     private boolean visible = false;
     // Panel dimensions.
     private float panelWidth, panelHeight;
@@ -19,7 +19,7 @@ public class SimpleEquipmentUI {
     // Reference to a BitmapFont for text.
     private BitmapFont font;
 
-    public SimpleEquipmentUI(BitmapFont font) {
+    public EquipmentUI(BitmapFont font) {
         this.font = font;
         panelWidth = 200;
         panelHeight = 100;
