@@ -11,15 +11,20 @@ public class DungeonCrawlerGame extends Game {
 
     @Override
     public void create() {
-        instance = this; // set static instance
+        instance = this;
         batch = new SpriteBatch();
-        engine = new Engine();
-        setScreen(new GameScreen(this));
+        restartGame(); // Call restart game method initially
     }
 
     @Override
     public void render() {
         super.render();
+    }
+
+    public void restartGame() {
+        engine = new Engine();
+        engine.init();
+        setScreen(new GameScreen(this));
     }
 
     @Override

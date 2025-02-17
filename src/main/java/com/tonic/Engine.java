@@ -13,10 +13,7 @@ import com.tonic.entities.Player;
 import com.tonic.items.Item;
 import com.tonic.items.Weapon;
 import com.tonic.systems.*;
-import com.tonic.ui.Minimap;
-import com.tonic.ui.EquipmentUI;
-import com.tonic.ui.InventoryUI;
-import com.tonic.ui.LootUI;
+import com.tonic.ui.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +28,20 @@ public class Engine {
     public int currentFloor;
     public Floor currentFloorObj;
     public List<LootDrop> lootDrops;
-    private long baseSeed = MathUtils.random(0, 1000000);
+    private final long baseSeed;
     public InventoryUI inventoryUI;
     public EquipmentUI equipmentUI;
     public LootUI simpleLootUI;
     public Minimap minimap;
     public Map<String, StaircaseLink> staircaseLinks = new HashMap<>();
+    public boolean gameOver = false;
 
     private String getStairKey(int floor, int tileX, int tileY, String side) {
         return floor + ":" + tileX + "," + tileY + ":" + side;
     }
 
     public Engine() {
+        baseSeed = MathUtils.random(0, Long.MAX_VALUE);
         combatSystem = new CombatSystem();
         questManager = new QuestManager();
         floors = new HashMap<>();
@@ -74,6 +73,16 @@ public class Engine {
     }
 
     public void update(float delta, OrthographicCamera hudCamera) {
+        if(gameOver)
+            return;
+
+        if(player.health <= 0)
+        {
+            gameOver = true;
+            DungeonCrawlerGame.instance.setScreen(new GameOverScreen(DungeonCrawlerGame.instance));
+            return;
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             if (equipmentUI.isVisible()) equipmentUI.toggle();
             inventoryUI.toggle();
@@ -109,16 +118,13 @@ public class Engine {
                         " to floor " + link.targetFloor);
                 currentFloor = link.targetFloor;
                 currentFloorObj = floors.get(currentFloor);
-                player.x = link.targetX * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
-                player.y = link.targetY * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
+                player.setTile(link.targetX, link.targetY);
             } else {
                 if (onStairs == 1) {
                     System.out.println("Creating new floor via staircase linking.");
                     int newFloorNum = currentFloor + 1;
                     long seed = baseSeed + newFloorNum;
-                    int forcedUpX = playerTileX;
-                    int forcedUpY = playerTileY;
-                    Floor newFloor = new Floor(newFloorNum, 50, 40, seed, forcedUpX, forcedUpY);
+                    Floor newFloor = new Floor(newFloorNum, 50, 40, seed, playerTileX, playerTileY);
                     floors.put(newFloorNum, newFloor);
 
                     StaircaseLink linkDown = new StaircaseLink(
@@ -143,8 +149,7 @@ public class Engine {
                     currentFloor = newFloorNum;
                     currentFloorObj = newFloor;
                     // Place the player at the new floor's up staircase.
-                    player.x = newFloor.dungeonMap.stairsUpX * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
-                    player.y = newFloor.dungeonMap.stairsUpY * DungeonMap.TILE_SIZE + DungeonMap.TILE_SIZE/2;
+                    player.setTile(newFloor.dungeonMap.stairsUpX, newFloor.dungeonMap.stairsUpY);
                 } else {
                     System.out.println("Cannot create a new link from an up staircase.");
                 }
