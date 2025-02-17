@@ -51,7 +51,7 @@ public class Engine {
     public void init() {
         currentFloor = 0;
         long seed = baseSeed + currentFloor;
-        Floor floor0 = new Floor(currentFloor, 100, 100, seed, false);
+        Floor floor0 = new Floor(currentFloor, 50, 40, seed, false);
         floors.put(currentFloor, floor0);
         currentFloorObj = floor0;
 
